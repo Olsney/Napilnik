@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logger", "Logger\Logger.csproj", "{3B79B0DE-1EC7-4CAC-8649-BE88EC206823}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaymentSystems", "PaymentSystems\PaymentSystems.csproj", "{6C34178A-067C-4D13-AD43-1B8FD4E2E999}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{3B79B0DE-1EC7-4CAC-8649-BE88EC206823}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3B79B0DE-1EC7-4CAC-8649-BE88EC206823}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3B79B0DE-1EC7-4CAC-8649-BE88EC206823}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C34178A-067C-4D13-AD43-1B8FD4E2E999}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C34178A-067C-4D13-AD43-1B8FD4E2E999}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C34178A-067C-4D13-AD43-1B8FD4E2E999}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C34178A-067C-4D13-AD43-1B8FD4E2E999}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
