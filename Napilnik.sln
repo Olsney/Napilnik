@@ -14,6 +14,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanCode_ExampleTask11", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanCode_ExampleTask14", "CleanCode_ExampleTask14\CleanCode_ExampleTask14.csproj", "{05A3CBC7-BA0F-4911-A05D-E233F7F11188}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanCode_ExampleTask15", "CleanCode_ExampleTask15\CleanCode_ExampleTask15.csproj", "{65205363-5DAD-4775-A52D-54872EFF8F2D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,5 +50,9 @@ Global
 		{05A3CBC7-BA0F-4911-A05D-E233F7F11188}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{05A3CBC7-BA0F-4911-A05D-E233F7F11188}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{05A3CBC7-BA0F-4911-A05D-E233F7F11188}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65205363-5DAD-4775-A52D-54872EFF8F2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65205363-5DAD-4775-A52D-54872EFF8F2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65205363-5DAD-4775-A52D-54872EFF8F2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65205363-5DAD-4775-A52D-54872EFF8F2D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
