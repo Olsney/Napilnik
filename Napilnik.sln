@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaymentSystems", "PaymentSy
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanCode_ExampleTask1", "CleanCode_ExampleTask1\CleanCode_ExampleTask1.csproj", "{F9171681-EF63-49DF-B47B-6C3AB613DD6C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanCode_ExampleTask2", "CleanCode_ExampleTask2\CleanCode_ExampleTask2.csproj", "{19F998A1-6211-4E25-BA10-29A6AB40A67B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{F9171681-EF63-49DF-B47B-6C3AB613DD6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F9171681-EF63-49DF-B47B-6C3AB613DD6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F9171681-EF63-49DF-B47B-6C3AB613DD6C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19F998A1-6211-4E25-BA10-29A6AB40A67B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19F998A1-6211-4E25-BA10-29A6AB40A67B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19F998A1-6211-4E25-BA10-29A6AB40A67B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19F998A1-6211-4E25-BA10-29A6AB40A67B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
