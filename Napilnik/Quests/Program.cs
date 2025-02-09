@@ -1,4 +1,4 @@
-﻿namespace Napilnik;
+﻿namespace Napilnik.Quests;
 
 class Program
 {
