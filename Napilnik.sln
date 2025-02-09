@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanCode_ExampleTask2", "C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanCode_ExampleTask10", "CleanCode_ExampleTask10\CleanCode_ExampleTask10.csproj", "{71C9A297-2BCA-42D9-AFD2-92EEA32BE21F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanCode_ExampleTask11", "CleanCode_ExampleTask11\CleanCode_ExampleTask11.csproj", "{DEBC27DB-16DC-4713-8B13-AA3FB639CA97}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +38,9 @@ Global
 		{71C9A297-2BCA-42D9-AFD2-92EEA32BE21F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{71C9A297-2BCA-42D9-AFD2-92EEA32BE21F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{71C9A297-2BCA-42D9-AFD2-92EEA32BE21F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DEBC27DB-16DC-4713-8B13-AA3FB639CA97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DEBC27DB-16DC-4713-8B13-AA3FB639CA97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DEBC27DB-16DC-4713-8B13-AA3FB639CA97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DEBC27DB-16DC-4713-8B13-AA3FB639CA97}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
