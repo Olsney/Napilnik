@@ -11,16 +11,20 @@ class Program
         //pay.system1.ru/order?amount=12000RUB&hash={MD5 хеш ID заказа}
         //order.system2.ru/pay?hash={MD5 хеш ID заказа + сумма заказа}
         //system3.com/pay?amount=12000&curency=RUB&hash={SHA-1 хеш сумма заказа + ID заказа + секретный ключ от системы}
+        
+        string formatToHashInPaySystem = "pay.system1.ru/order?amount={0}RUB&hash={1}";
+        string formatToHashInOrderSystem = "order.system2.ru/pay?hash={0}";
+        string formatToHashInPayWithCurrencySystem = "system3.com/pay?amount={0}&curency=RUB&hash={1}";
 
-        Order order = new Order(100, 1000);
+        Order order = new Order(100, 12000);
         
-        PaySystem paySystem = new PaySystem(new MD5Service());
-        OrderSystem orderSystem = new OrderSystem(new MD5Service());
-        PayWithCurrencySystem payWithCurrencySystem = new PayWithCurrencySystem(new SHAService());
+        PaySystem paySystem = new PaySystem(new MD5Service(), formatToHashInPaySystem);
+        OrderSystem orderSystem = new OrderSystem(new MD5Service(), formatToHashInOrderSystem);
+        PayWithCurrencySystem payWithCurrencySystem = new PayWithCurrencySystem(new SHAService(), formatToHashInPayWithCurrencySystem);
         
-        Console.WriteLine($"pay.system1.ru/order?amount=12000RUB&hash={paySystem.GetPayingLink(order)}");
-        Console.WriteLine($"order.system2.ru/pay?hash={orderSystem.GetPayingLink(order)}");
-        Console.WriteLine($"system3.com/pay?amount=12000&curency=RUB&hash={payWithCurrencySystem.GetPayingLink(order)}");
+        Console.WriteLine(paySystem.GetPayingLink(order));
+        Console.WriteLine(orderSystem.GetPayingLink(order));
+        Console.WriteLine(payWithCurrencySystem.GetPayingLink(order));
     }
 }
 
@@ -77,25 +81,33 @@ public class SHAService : IHashService
 public class PaySystem : IPaymentSystem
 {
     private readonly IHashService _hashService;
+    private readonly string _format;
 
-    public PaySystem(IHashService hashService) => 
+    public PaySystem(IHashService hashService, string format)
+    {
         _hashService = hashService;
+        _format = format;
+    }
 
     public string GetPayingLink(Order order)
     {
         if(order == null)
             throw new ArgumentException(nameof(order));
         
-        return _hashService.Hash(order.Id.ToString());
+        return string.Format(_format, order.Amount, _hashService.Hash(order.Id.ToString()));
     }
 }
 
 public class OrderSystem : IPaymentSystem
 {
     private readonly IHashService _hashService;
+    private readonly string _format;
 
-    public OrderSystem(IHashService hashService) => 
+    public OrderSystem(IHashService hashService, string format)
+    {
         _hashService = hashService;
+        _format = format;
+    }
 
     public string GetPayingLink(Order order)
     {
@@ -104,7 +116,7 @@ public class OrderSystem : IPaymentSystem
         
         string stringToHash = $"{order.Id}_{order.Amount}";
         
-        return _hashService.Hash(stringToHash);
+        return string.Format(_format, _hashService.Hash(stringToHash));
     }
 }
 
@@ -113,9 +125,13 @@ public class PayWithCurrencySystem : IPaymentSystem
     private const string SystemSecretKey = "0XASDNLJsd";
     
     private readonly IHashService _hashService;
+    private readonly string _format;
 
-    public PayWithCurrencySystem(IHashService hashService) => 
+    public PayWithCurrencySystem(IHashService hashService, string format)
+    {
         _hashService = hashService;
+        _format = format;
+    }
 
     public string GetPayingLink(Order order)
     {
@@ -124,6 +140,6 @@ public class PayWithCurrencySystem : IPaymentSystem
         
         string stringToHash = $"{order.Id}_{order.Amount}_{SystemSecretKey}";
         
-        return _hashService.Hash(stringToHash);
+        return string.Format(_format, order.Amount, _hashService.Hash(stringToHash));
     }
 }
