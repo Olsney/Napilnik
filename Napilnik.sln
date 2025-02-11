@@ -18,6 +18,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanCode_ExampleTask15", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "medium8-1-4", "medium8-1-4\medium8-1-4.csproj", "{FD59C81B-28FA-4CA0-AE88-99E6C588432C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Task 27", "Task 27\Task 27.csproj", "{F55FAEC8-20A9-441C-A81D-78CBF4880C3D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OCP", "OCP\OCP.csproj", "{A6F1718A-1FE5-4CC1-B7B9-CCDB03DF74FC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -60,5 +64,13 @@ Global
 		{FD59C81B-28FA-4CA0-AE88-99E6C588432C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FD59C81B-28FA-4CA0-AE88-99E6C588432C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FD59C81B-28FA-4CA0-AE88-99E6C588432C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F55FAEC8-20A9-441C-A81D-78CBF4880C3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F55FAEC8-20A9-441C-A81D-78CBF4880C3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F55FAEC8-20A9-441C-A81D-78CBF4880C3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F55FAEC8-20A9-441C-A81D-78CBF4880C3D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6F1718A-1FE5-4CC1-B7B9-CCDB03DF74FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6F1718A-1FE5-4CC1-B7B9-CCDB03DF74FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6F1718A-1FE5-4CC1-B7B9-CCDB03DF74FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6F1718A-1FE5-4CC1-B7B9-CCDB03DF74FC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
