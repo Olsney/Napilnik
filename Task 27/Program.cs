@@ -22,7 +22,7 @@ public class MessageBox
 class Executor
 {
     private PassportTextbox passportTextbox;
-    private textResult textResult;
+    private TextResult textResult;
 
     private void checkButton_Click(object sender, EventArgs e)
     {
@@ -79,12 +79,63 @@ class Executor
     }
 }
 
-class PassportTextbox
+internal class SQLiteException : Exception
 {
-    private string Text { get; set; }
+    public int ErrorCode { get; set; }
 }
 
-class textResult
+internal class SQLiteDataAdapter
 {
-    
+    public SQLiteDataAdapter(SQLiteCommand sqLiteCommand)
+    {
+        
+    }
+
+    public void Fill(DataTable dataTable2)
+    {
+        
+    }
+}
+
+class SQLiteCommand
+{
+    public SQLiteCommand(string commandText, SQLiteConnection sqLiteConnection)
+    {
+        
+    }
+}
+
+class SQLiteConnection
+{
+    public SQLiteConnection(string connectionString)
+    {
+    }
+
+    public void Open()
+    {
+        
+    }
+
+    public void Close()
+    {
+        
+    }
+}
+
+class Form1
+{
+    public static string ComputeSha256Hash(string data)
+    {
+        return data;
+    }
+}
+
+class PassportTextbox
+{
+    public string Text { get; set; }
+}
+
+class TextResult
+{
+    public string Text { get; set; }
 }
