@@ -18,9 +18,9 @@
     public enum PaymentSystems
     {
         Unknown = 0,
-        QIWI = 1,
-        WebMoney = 2,
-        Card = 3
+        QIWI = 100,
+        WebMoney = 200,
+        Card = 300
     }
 
     public class OrderForm
