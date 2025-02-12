@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace IMJunior
+﻿namespace IMJunior
 {
     class Program
     {
@@ -8,44 +6,58 @@ namespace IMJunior
         {
             var orderForm = new OrderForm();
             var paymentHandler = new PaymentHandler();
-
-            var systemId = orderForm.ShowForm();
-
-            if (systemId == "QIWI")
-                Console.WriteLine("Перевод на страницу QIWI...");
-            else if (systemId == "WebMoney")
-                Console.WriteLine("Вызов API WebMoney...");
-            else if (systemId == "Card")
-                Console.WriteLine("Вызов API банка эмитера карты Card...");
-
-            paymentHandler.ShowPaymentResult(systemId);
+            int paymentSystemId = orderForm.GetPaymentSystemId();
+            
+            orderForm.ShowPaymentSystemsInfo();
+            paymentHandler.Handle(paymentSystemId);
         }
+    }
+
+    public enum PaymentSystems
+    {
+        Unknown = 0,
+        QIWI = 1,
+        WebMoney = 2,
+        Card = 3
     }
 
     public class OrderForm
     {
-        public string ShowForm()
+        public int GetPaymentSystemId()
         {
-            Console.WriteLine("Мы принимаем: QIWI, WebMoney, Card");
-
-            //симуляция веб интерфейса
-            Console.WriteLine("Какое системой вы хотите совершить оплату?");
-            return Console.ReadLine();
+            Console.WriteLine("Какой платежной системой вы хотите совершить оплату?");
+            
+            return int.TryParse(Console.ReadLine(), out int systemId) 
+                ? systemId 
+                : 0;
         }
+        
+        public void ShowPaymentSystemsInfo() => 
+            Console.WriteLine($"Мы принимаем: {PaymentSystems.QIWI}, {PaymentSystems.Card}, {PaymentSystems.WebMoney}");
     }
 
     public class PaymentHandler
     {
-        public void ShowPaymentResult(string systemId)
+        public void Handle(int systemId)
         {
+            PaymentSystems paymentSystem = (PaymentSystems)systemId;
+
             Console.WriteLine($"Вы оплатили с помощью {systemId}");
 
-            if (systemId == "QIWI")
-                Console.WriteLine("Проверка платежа через QIWI...");
-            else if (systemId == "WebMoney")
-                Console.WriteLine("Проверка платежа через WebMoney...");
-            else if (systemId == "Card")
-                Console.WriteLine("Проверка платежа через Card...");
+            switch (paymentSystem)
+            {
+                case PaymentSystems.QIWI:
+                    Console.WriteLine($"Проверка платежа через {PaymentSystems.QIWI}...");
+                    break;
+                case PaymentSystems.WebMoney:
+                    Console.WriteLine($"Проверка платежа через {PaymentSystems.WebMoney}...");
+                    break;
+                case PaymentSystems.Card:
+                    Console.WriteLine($"Проверка платежа через {PaymentSystems.Card}...");
+                    break;
+                default:
+                    throw new Exception($"Платежная система {PaymentSystems.Unknown}. Оплата прошла неудачно.");
+            }
 
             Console.WriteLine("Оплата прошла успешно!");
         }
