@@ -6,9 +6,11 @@
         {
             var orderForm = new OrderForm();
             var paymentHandler = new PaymentHandler();
-            int paymentSystemId = orderForm.GetPaymentSystemId();
             
             orderForm.ShowPaymentSystemsInfo();
+                
+            int paymentSystemId = orderForm.GetPaymentSystemId();
+            
             paymentHandler.Handle(paymentSystemId);
         }
     }
@@ -25,7 +27,7 @@
     {
         public int GetPaymentSystemId()
         {
-            Console.WriteLine("Какой платежной системой вы хотите совершить оплату?");
+            Console.WriteLine("Введите номер платежной системой, которой вы хотите совершить оплату.");
             
             return int.TryParse(Console.ReadLine(), out int systemId) 
                 ? systemId 
@@ -33,7 +35,7 @@
         }
         
         public void ShowPaymentSystemsInfo() => 
-            Console.WriteLine($"Мы принимаем: {PaymentSystems.QIWI}, {PaymentSystems.Card}, {PaymentSystems.WebMoney}");
+            Console.WriteLine($"Мы принимаем: 1 - {PaymentSystems.QIWI}, 2 - {PaymentSystems.Card}, 3 - {PaymentSystems.WebMoney}");
     }
 
     public class PaymentHandler
@@ -41,8 +43,7 @@
         public void Handle(int systemId)
         {
             PaymentSystems paymentSystem = (PaymentSystems)systemId;
-
-
+            
             switch (paymentSystem)
             {
                 case PaymentSystems.QIWI:
