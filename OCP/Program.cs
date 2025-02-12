@@ -35,7 +35,10 @@
         }
         
         public void ShowPaymentSystemsInfo() => 
-            Console.WriteLine($"Мы принимаем: 1 - {PaymentSystems.QIWI}, 2 - {PaymentSystems.Card}, 3 - {PaymentSystems.WebMoney}");
+            Console.WriteLine($"Мы принимаем: " +
+                              $"1 - {PaymentSystems.QIWI}, " +
+                              $"2 - {PaymentSystems.Card}, " +
+                              $"3 - {PaymentSystems.WebMoney}");
     }
 
     public class PaymentHandler
