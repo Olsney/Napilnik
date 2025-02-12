@@ -42,7 +42,6 @@
         {
             PaymentSystems paymentSystem = (PaymentSystems)systemId;
 
-            Console.WriteLine($"Вы оплатили с помощью {systemId}");
 
             switch (paymentSystem)
             {
@@ -59,6 +58,7 @@
                     throw new Exception($"Платежная система {PaymentSystems.Unknown}. Оплата прошла неудачно.");
             }
 
+            Console.WriteLine($"Вы оплатили с помощью {paymentSystem}");
             Console.WriteLine("Оплата прошла успешно!");
         }
     }
