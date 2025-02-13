@@ -1,69 +1,123 @@
-﻿namespace IMJunior
+﻿using PaymentSystems;
+
+namespace IMJunior
 {
     class Program
     {
         static void Main(string[] args)
         {
-            var orderForm = new OrderForm();
-            var paymentHandler = new PaymentHandler();
-            
-            orderForm.ShowPaymentSystemsInfo();
-                
-            int paymentSystemId = orderForm.GetPaymentSystemId();
-            
-            paymentHandler.Handle(paymentSystemId);
-        }
-    }
+            List<IPaymentSystemFactory> systemFactories = new List<IPaymentSystemFactory>();
 
-    public enum PaymentSystems
-    {
-        Unknown = 0,
-        QIWI = 100,
-        WebMoney = 200,
-        Card = 300
+            systemFactories.Add(new QiwiPaymentSystemsFactory());
+            systemFactories.Add(new WebMoneyPaymentSystemsFactory());
+            systemFactories.Add(new CardPaymentSystemsFactory());
+
+            PaymentSystemsFactoryProvider provider = new PaymentSystemsFactoryProvider(systemFactories);
+
+            var orderForm = new OrderForm(provider.Ids);
+
+            IPaymentSystemFactory paymentSystemFactory = provider.GetPaymentSystem(orderForm.GetPaymentSystemId());
+
+            var paymentHandler = new PaymentHandler(paymentSystemFactory);
+
+            paymentHandler.Handle();
+        }
     }
 
     public class OrderForm
     {
-        public int GetPaymentSystemId()
+        private readonly List<string> _ids;
+
+        public OrderForm(List<string> ids) => 
+            _ids = ids;
+
+        public string GetPaymentSystemId()
         {
-            Console.WriteLine("Введите номер платежной системой, которой вы хотите совершить оплату.");
-            
-            return int.TryParse(Console.ReadLine(), out int systemId) 
-                ? systemId 
-                : 0;
+            ShowPaymentSystemsInfo();
+            Console.WriteLine("Введите название платежной системой, которой вы хотите совершить оплату.");
+
+            return Console.ReadLine();
         }
-        
-        public void ShowPaymentSystemsInfo() => 
-            Console.WriteLine($"Мы принимаем: " +
-                              $"1 - {PaymentSystems.QIWI}, " +
-                              $"2 - {PaymentSystems.Card}, " +
-                              $"3 - {PaymentSystems.WebMoney}");
+
+        private void ShowPaymentSystemsInfo() => 
+            Console.WriteLine($"Мы принимаем: {string.Join(", ", _ids)}");
     }
 
-    public class PaymentHandler
+    internal class PaymentHandler
     {
-        public void Handle(int systemId)
-        {
-            PaymentSystems paymentSystem = (PaymentSystems)systemId;
-            
-            switch (paymentSystem)
-            {
-                case PaymentSystems.QIWI:
-                    Console.WriteLine($"Проверка платежа через {PaymentSystems.QIWI}...");
-                    break;
-                case PaymentSystems.WebMoney:
-                    Console.WriteLine($"Проверка платежа через {PaymentSystems.WebMoney}...");
-                    break;
-                case PaymentSystems.Card:
-                    Console.WriteLine($"Проверка платежа через {PaymentSystems.Card}...");
-                    break;
-                default:
-                    throw new Exception($"Платежная система {PaymentSystems.Unknown}. Оплата прошла неудачно.");
-            }
+        private readonly IPaymentSystem _paymentSystem;
 
-            Console.WriteLine($"Вы оплатили с помощью {paymentSystem}");
-            Console.WriteLine("Оплата прошла успешно!");
-        }
+        public PaymentHandler(IPaymentSystemFactory systemFactory) => 
+            _paymentSystem = systemFactory.Create();
+
+        public void Handle() => 
+            _paymentSystem.Pay();
+    }
+
+    internal class QiwiPaymentSystem : IPaymentSystem
+    {
+        public void Pay() => 
+            Console.WriteLine($"Вы успешно совершили оплату с помощью {GetType().Name}");
+    }
+
+    internal class WebMoneyPaymentSystem : IPaymentSystem
+    {
+        public void Pay() => 
+            Console.WriteLine($"Вы успешно совершили оплату с помощью {GetType().Name}");
+    }
+
+    internal class CardPaymentSystem : IPaymentSystem
+    {
+        public void Pay() => 
+            Console.WriteLine($"Вы успешно совершили оплату с помощью {GetType().Name}");
+    }
+
+    internal interface IPaymentSystem
+    {
+        void Pay();
+    }
+
+
+    internal interface IPaymentSystemFactory
+    {
+        public string Id { get; }
+        IPaymentSystem Create();
+    }
+
+    class QiwiPaymentSystemsFactory : IPaymentSystemFactory
+    {
+        public string Id { get; } = "Qiwi";
+
+        public IPaymentSystem Create() =>
+            new QiwiPaymentSystem();
+    }
+
+    class WebMoneyPaymentSystemsFactory : IPaymentSystemFactory
+    {
+        public string Id { get; } = "WebMoney";
+
+        public IPaymentSystem Create() =>
+            new WebMoneyPaymentSystem();
+    }
+
+    class CardPaymentSystemsFactory : IPaymentSystemFactory
+    {
+        public string Id { get; } = "Card";
+
+        public IPaymentSystem Create() =>
+            new CardPaymentSystem();
+    }
+
+    class PaymentSystemsFactoryProvider
+    {
+        private readonly List<IPaymentSystemFactory> _systems;
+
+        public PaymentSystemsFactoryProvider(List<IPaymentSystemFactory> systems) =>
+            _systems = systems;
+
+        public List<string> Ids => _systems.Select(x => x.Id).ToList();
+
+        public IPaymentSystemFactory GetPaymentSystem(string id) =>
+            _systems.Single(factory => factory.Id.ToLower() == id.ToLower());
     }
 }

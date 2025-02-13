@@ -40,7 +40,7 @@ public class Order
     }
 }
 
-public interface IPaymentSystem
+internal interface IPaymentSystem
 {
     public string GetPayingLink(Order order);
 }
