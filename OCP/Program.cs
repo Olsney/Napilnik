@@ -1,6 +1,4 @@
-﻿using PaymentSystems;
-
-namespace IMJunior
+﻿namespace OCP
 {
     class Program
     {
