@@ -1,5 +1,4 @@
-﻿using System.Data;
-using Task_27.Model;
+﻿using Task_27.Model;
 using Task_27.Services;
 
 namespace Task_27.Presenter;

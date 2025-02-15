@@ -1,13 +1,8 @@
-﻿using System.Reflection;
-
-namespace Task_27;
-
-//Нужно создать хешсервис
+﻿namespace Task_27;
 
 class Program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("Hello, World!");
     }
 }
