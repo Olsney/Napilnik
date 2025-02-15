@@ -1,7 +1,5 @@
 ﻿using System.Data;
 using System.Reflection;
-using Task_27.Interfaces;
-using Task_27.Services;
 
 namespace Task_27.Model;
 

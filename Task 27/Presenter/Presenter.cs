@@ -16,30 +16,41 @@ class Presenter
 
     public void HandleUserInputInfo(string passportInfoText)
     {
-        Passport passport = new Passport(passportInfoText);
-
-        bool? isVoted = _passportService.Handle(passport);
-        
-        if (isVoted == null)
+        try
         {
+            Passport passport = new Passport(passportInfoText);
+
+            bool? isVoted = _passportService.Handle(passport);
+
+            if (isVoted == null)
+            {
+                _passportView.ShowResultText(
+                    $"По паспорту «{passportInfoText}» " +
+                    $"в списке участников дистанционного голосования НЕ НАЙДЕН");
+
+                return;
+            }
+
+            if (isVoted == false)
+            {
+                _passportView.ShowResultText(
+                    $"По паспорту «{passportInfoText}» " +
+                    $"доступ к бюллетеню на дистанционном электронном голосовании НЕ ПРЕДОСТАВЛЯЕТСЯ");
+
+                return;
+            }
+
             _passportView.ShowResultText(
                 $"По паспорту «{passportInfoText}» " +
-                $"в списке участников дистанционного голосования НЕ НАЙДЕН");
-
-            return;
+                $"доступ к бюллетеню на дистанционном электронном голосовании ПРЕДОСТАВЛЕН");
         }
-
-        if (isVoted == false)
+        catch (ArgumentException argumentExceptionexception)
         {
-            _passportView.ShowResultText(
-                $"По паспорту «{passportInfoText}» " +
-                $"доступ к бюллетеню на дистанционном электронном голосовании НЕ ПРЕДОСТАВЛЯЕТСЯ");
-
-            return;
+            _passportView.ShowResultText(argumentExceptionexception.Message);
         }
-
-        _passportView.ShowResultText(
-            $"По паспорту «{passportInfoText}» " +
-            $"доступ к бюллетеню на дистанционном электронном голосовании ПРЕДОСТАВЛЕН");
+        catch (FileNotFoundException fileNotFoundException)
+        {
+            _passportView.ShowResultText(fileNotFoundException.Message);
+        }
     }
 }
