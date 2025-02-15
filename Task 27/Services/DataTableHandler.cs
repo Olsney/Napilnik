@@ -12,29 +12,22 @@ class DataTableHandler
         _dataBase = dataBase;
     }
     
-    public bool? Handle(DataTable dataTable)
+    public bool? Handle(string rawData)
     {
+        DataTable dataTable = _dataBase.GetInfoFromDataTableAboutAccessToVote(rawData);
         
         if (InfoExist(dataTable) == false)
-        {
             return null;
-        }
 
         if (IsVoted(dataTable) == false)
-        {
             return false;
-        }
         
         return true;
     }
     
-    private static bool InfoExist(DataTable dataTable)
-    {
-        return dataTable.Rows.Count > 0;
-    }
+    private static bool InfoExist(DataTable dataTable) => 
+        dataTable.Rows.Count > 0;
 
-    private static bool IsVoted(DataTable dataTable)
-    {
-        return Convert.ToBoolean(dataTable.Rows[0].ItemArray[1]);
-    }
+    private static bool IsVoted(DataTable dataTable) => 
+        Convert.ToBoolean(dataTable.Rows[0].ItemArray[1]);
 }

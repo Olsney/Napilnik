@@ -6,16 +6,16 @@ namespace Task_27.Model;
 
 class DataBase
 {
-    private const int MinRawDataLength = 10;
-
     private readonly IHashService _hashService;
+    private readonly RawToPassportDataHandler _rawToPassportDataHandler;
     private readonly DataTable _dataTableHandler;
+    private readonly string _dataBaseDirectory;
 
-    private string _dataBaseDirectory;
 
-    public DataBase(IHashService hashService)
+    public DataBase(IHashService hashService, RawToPassportDataHandler rawToPassportDataHandler)
     {
         _hashService = hashService;
+        _rawToPassportDataHandler = rawToPassportDataHandler;
 
         _dataBaseDirectory = string.Format("Data Source=" +
                                            Path.GetDirectoryName(Assembly.GetExecutingAssembly()
@@ -26,8 +26,13 @@ class DataBase
     {
         if (rawData == null)
             throw new ArgumentException();
+
+        string passportUserData = HandleData(rawData);
+
+        if (passportUserData == null)
+            throw new ArgumentException();
         
-        string commandText = $"select * from passports where num='{HashUserData(rawData)}' limit 1;";
+        string commandText = $"select * from passports where num='{HashUserData(passportUserData)}' limit 1;";
 
         SQLiteConnection connection = new SQLiteConnection(_dataBaseDirectory);
         
@@ -47,25 +52,36 @@ class DataBase
 
     public bool FindParticipationInfoByPassportData(string rawData)
     {
-        if (rawData.Contains(rawData) == false)
+        if (rawData == null)
             return false;
 
+        if (_rawToPassportDataHandler.Handle(rawData) == null)
+            return false;
+
+        return true;
+    }
+
+    private string HandleData(string rawData) => 
+        _rawToPassportDataHandler.Handle(rawData);
+
+    private string HashUserData(string rawData) => 
+        _hashService.Hash(rawData);
+}
+
+public class RawToPassportDataHandler
+{
+    private const int MinRawDataLength = 10;
+    
+    public string Handle(string rawData)
+    {
         if (rawData == null)
             throw new ArgumentException();
 
         string passportData = rawData.Replace(" ", string.Empty);
         
-
         if (passportData.Length < MinRawDataLength)
-            return false;
-
-        HashUserData(passportData);
-
-        return true;
-    }
-
-    private string HashUserData(string rawData)
-    {
-        return _hashService.Hash(rawData);
+            return null;
+        
+        return passportData;
     }
 }

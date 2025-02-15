@@ -2,28 +2,14 @@
 
 internal class View
 {
-    public TextBox PassportInfo;
-    public TextBox ResultText;
+    private TextBox _passportInfo;
+    private TextBox _resultText;
+    
     private Presenter.Presenter _presenter;
 
-    public void OnButtonClick()
-    {
-        _presenter.HandleUserInputInfo(PassportInfo.Text);
-    }
-    
-    public string GetUserInputInfo(string infoForUserInput)
-    {
-        // MessageBox.Show(infoForUserInput);
-        return Console.ReadLine();
-    }
-
-    public void ShowResultText(string resultText)
-    {
+    public void ShowResultText(string resultText) => 
         MessageBox.Show(resultText);
-    }
-}
 
-internal class TextBox
-{
-    public string Text { get; set; }
+    private void OnButtonClick() => 
+        _presenter.HandleUserInputInfo(_passportInfo.Text);
 }

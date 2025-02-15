@@ -2,8 +2,6 @@
 
 public class MessageBox
 {
-    public static void Show(string text)
-    {
+    public static void Show(string text) => 
         Console.WriteLine(text);
-    }
 }
