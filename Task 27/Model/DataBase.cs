@@ -1,6 +1,7 @@
 ﻿using System.Data;
 using System.Reflection;
 using Task_27.Interfaces;
+using Task_27.Services;
 
 namespace Task_27.Model;
 
@@ -66,22 +67,4 @@ class DataBase
 
     private string HashUserData(string rawData) => 
         _hashService.Hash(rawData);
-}
-
-public class RawToPassportDataHandler
-{
-    private const int MinRawDataLength = 10;
-    
-    public string Handle(string rawData)
-    {
-        if (rawData == null)
-            throw new ArgumentException();
-
-        string passportData = rawData.Replace(" ", string.Empty);
-        
-        if (passportData.Length < MinRawDataLength)
-            return null;
-        
-        return passportData;
-    }
 }
