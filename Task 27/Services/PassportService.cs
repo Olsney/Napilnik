@@ -1,23 +1,28 @@
 ﻿using System.Data;
+using Task_27.Interfaces;
 using Task_27.Model;
 
 namespace Task_27.Services;
 
-class DataTableHandler
+class PassportService
 {
     private readonly DataBase _dataBase;
+    private readonly IHashService _hashService;
 
-    public DataTableHandler(DataBase dataBase)
+    public PassportService(DataBase dataBase, IHashService hashService)
     {
         _dataBase = dataBase;
+        _hashService = hashService;
     }
     
-    public bool? Handle(string rawData)
+    public bool? Handle(Passport passport)
     {
-        DataTable dataTable = _dataBase.GetInfoFromDataTableAboutAccessToVote(rawData);
+        string hash = _hashService.Hash(passport.Info);
         
+        DataTable dataTable = _dataBase.GetInfoFromDataTableAboutAccessToVote(hash);
+
         if (InfoExist(dataTable) == false)
-            return null;
+            throw new InvalidOperationException("");
 
         if (IsVoted(dataTable) == false)
             return false;

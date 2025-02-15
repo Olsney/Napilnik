@@ -5,29 +5,20 @@ namespace Task_27.Presenter;
 
 class Presenter
 {
-    private readonly DataBase _dataBase;
     private readonly View.View _passportView;
-    private readonly DataTableHandler _dataTableHandler;
+    private readonly PassportService _passportService;
 
-    public Presenter(DataBase dataBase, View.View passportView, DataTableHandler DataTableHandler)
+    public Presenter(View.View passportView, PassportService passportService)
     {
-        _dataBase = dataBase;
         _passportView = passportView;
-        _dataTableHandler = DataTableHandler;
+        _passportService = passportService;
     }
 
     public void HandleUserInputInfo(string passportInfoText)
     {
-        if (_dataBase.FindParticipationInfoByPassportData(passportInfoText) == false)
-        {
-            _passportView.ShowResultText("Неверный формат серии или номера паспорта");
+        Passport passport = new Passport(passportInfoText);
 
-            return;
-        }
-
-        _dataBase.FindParticipationInfoByPassportData(passportInfoText);
-
-        bool? isVoted = _dataTableHandler.Handle(passportInfoText);
+        bool? isVoted = _passportService.Handle(passport);
         
         if (isVoted == null)
         {

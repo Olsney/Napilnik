@@ -7,64 +7,50 @@ namespace Task_27.Model;
 
 class DataBase
 {
-    private readonly IHashService _hashService;
-    private readonly RawToPassportDataHandler _rawToPassportDataHandler;
+    private const string FileName = "db.sqlite";
+    
     private readonly DataTable _dataTableHandler;
     private readonly string _dataBaseDirectory;
 
 
-    public DataBase(IHashService hashService, RawToPassportDataHandler rawToPassportDataHandler)
+    public DataBase()
     {
-        _hashService = hashService;
-        _rawToPassportDataHandler = rawToPassportDataHandler;
-
         _dataBaseDirectory = string.Format("Data Source=" +
                                            Path.GetDirectoryName(Assembly.GetExecutingAssembly()
-                                               .Location) + "\\db.sqlite");
+                                               .Location) + "\\{FileName}");
     }
 
-    public DataTable GetInfoFromDataTableAboutAccessToVote(string rawData)
+    public DataTable GetInfoFromDataTableAboutAccessToVote(string hash)
     {
-        if (rawData == null)
+        if (hash == null)
             throw new ArgumentException();
 
-        string passportUserData = HandleData(rawData);
-
-        if (passportUserData == null)
-            throw new ArgumentException();
-        
-        string commandText = $"select * from passports where num='{HashUserData(passportUserData)}' limit 1;";
-
-        SQLiteConnection connection = new SQLiteConnection(_dataBaseDirectory);
-        
-        connection.Open();
-        
-        SQLiteCommand sqLiteCommand = new SQLiteCommand(commandText, connection);
-        SQLiteDataAdapter sqLiteDataAdapter = new SQLiteDataAdapter(sqLiteCommand);
-        
         DataTable dataTable = new DataTable();
 
-        sqLiteDataAdapter.Fill(dataTable);
+        try
+        {
+            string commandText = $"select * from passports where num='{hash}' limit 1;";
 
-        connection.Close();
+            SQLiteConnection connection = new SQLiteConnection(_dataBaseDirectory);
+
+            connection.Open();
+
+            SQLiteCommand sqLiteCommand = new SQLiteCommand(commandText, connection);
+            SQLiteDataAdapter sqLiteDataAdapter = new SQLiteDataAdapter(sqLiteCommand);
+
+
+            sqLiteDataAdapter.Fill(dataTable);
+
+            connection.Close();
+        }
+        catch (SQLiteException exception)
+        {
+            if (exception.ErrorCode != 1)
+                throw new SQLiteException();
+
+            throw new FileNotFoundException($"Файл {FileName} не найден. Положите файл в папку вместе с exe.");
+        }
 
         return dataTable;
     }
-
-    public bool FindParticipationInfoByPassportData(string rawData)
-    {
-        if (rawData == null)
-            return false;
-
-        if (_rawToPassportDataHandler.Handle(rawData) == null)
-            return false;
-
-        return true;
-    }
-
-    private string HandleData(string rawData) => 
-        _rawToPassportDataHandler.Handle(rawData);
-
-    private string HashUserData(string rawData) => 
-        _hashService.Hash(rawData);
 }
